@@ -1,0 +1,38 @@
+{
+    "name": "krak/hmac",
+    "description": "Hmac library",
+    "type": "library",
+    "license": "MIT",
+    "homepage": "http://gitlab.bighead.net/krak/hmac",
+    "keywords": [
+        "symfony",
+        "pimple",
+        "hmac",
+        "api"
+    ],
+    "authors": [
+        {
+            "name": "RJ Garcia",
+            "email": "rj@bighead.net"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "~4.0",
+        "pimple/pimple": "~3.0",
+        "symfony/http-foundation": "~2.0"
+    },
+    "suggest": {
+        "symfony/http-foundation": "~2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Krak\\Hmac\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Krak\\Tests\\": "tests"
+        }
+    }
+}
