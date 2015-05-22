@@ -25,7 +25,7 @@ class HttpFoundationHmacRequest implements HmacRequest
 
     public function getPublicKey()
     {
-        return $this->request->headers->get($this->public_key_header);
+        return $this->request->headers->get($this->public_key_header, '');
     }
     public function setPublicKey($key)
     {
@@ -33,7 +33,7 @@ class HttpFoundationHmacRequest implements HmacRequest
     }
     public function getHash()
     {
-        return $this->request->headers->get($this->hash_header);
+        return $this->request->headers->get($this->hash_header, '');
     }
     public function setHash($hash)
     {
@@ -41,7 +41,7 @@ class HttpFoundationHmacRequest implements HmacRequest
     }
     public function getTimestamp()
     {
-        return $this->request->headers->get($this->timestamp_header);
+        return $this->request->headers->get($this->timestamp_header, '');
     }
     public function setTimestamp($timestamp)
     {
@@ -50,6 +50,14 @@ class HttpFoundationHmacRequest implements HmacRequest
     public function getContent()
     {
         return $this->request->getContent();
+    }
+    public function getUri()
+    {
+        return $this->request->getUri();
+    }
+    public function getMethod()
+    {
+        return $this->request->getMethod();
     }
     public function getHttpRequest()
     {

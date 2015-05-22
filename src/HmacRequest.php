@@ -10,5 +10,7 @@ interface HmacRequest
     public function setHash($hash);
     public function getTimestamp();
     public function setTimestamp($timestamp);
+    public function getUri();
+    public function getMethod();
     public function getContent();
 }

@@ -29,6 +29,10 @@ class HmacManager
             $req->getPublicKey()
         );
 
+        if (!$keypair) {
+            return false;
+        }
+
         return $this->signer->validateRequest($req, $keypair, $this->hasher);
     }
 }

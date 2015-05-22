@@ -8,10 +8,14 @@ class MockHmacRequest implements HmacRequest
     private $hash;
     private $timestamp;
     private $content;
+    private $uri;
+    private $method;
 
-    public function __construct($content)
+    public function __construct($content, $uri, $method)
     {
         $this->content = $content;
+        $this->uri = $uri;
+        $this->method = $method;
     }
 
     public function setPublicKey($key)
@@ -44,5 +48,15 @@ class MockHmacRequest implements HmacRequest
     public function getContent()
     {
         return $this->content;
+    }
+
+    public function getUri()
+    {
+        return $this->uri;
+    }
+
+    public function getMethod()
+    {
+        return $this->method;
     }
 }
