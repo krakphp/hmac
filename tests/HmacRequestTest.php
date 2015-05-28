@@ -28,7 +28,7 @@ class HmacRequestTest extends TestCase
 
     public function testMockConstruct()
     {
-        $req = new MockHmacRequest('');
+        $req = new MockHmacRequest('', '', '');
         $this->assertEquals('', $req->getContent());
     }
 

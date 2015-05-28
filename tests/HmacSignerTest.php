@@ -13,7 +13,7 @@ class HmacSignerTest extends TestCase
      */
     public function testSigner(Hmac\HmacSigner $signer)
     {
-        $req = new Hmac\MockHmacRequest('content');
+        $req = new Hmac\MockHmacRequest('content', 'uri', 'method');
         $key_pair = new Hmac\HmacKeyPair('pub', 'priv');
         $hasher = new Hmac\StdHmacHasher();
 
@@ -24,7 +24,8 @@ class HmacSignerTest extends TestCase
     public function hmacSignerProvider()
     {
         return [
-            [new Hmac\ContentHmacSigner()]
+            [new Hmac\ContentHmacSigner()],
+            [new Hmac\RequestHmacSigner()],
         ];
     }
 }

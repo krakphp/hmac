@@ -26,14 +26,10 @@ class RequestHmacSigner implements HmacSigner
     {
         $expected_hash = $request->getHash();
 
-        echo $this->getHashString($request) . PHP_EOL;
-
         $hash = $hasher->hashContent(
             $this->getHashString($request),
             $pair
         );
-
-        echo $hash . PHP_EOL;
 
         if (!hash_equals($hash, $expected_hash)) {
             return false;

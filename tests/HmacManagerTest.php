@@ -17,7 +17,7 @@ class HmacManagerTest extends TestCase
             new Hmac\StdHmacHasher(),
             $provider
         );
-        $req = new Hmac\MockHmacRequest('content');
+        $req = new Hmac\MockHmacRequest('content', 'uri', 'method');
         $manager->signRequest($req, $provider->getKeyPairFromPublicKey('pub'));
         $this->assertTrue(
             $manager->validateRequest($req)
