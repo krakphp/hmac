@@ -40,17 +40,17 @@ class HmacTest extends TestCase
         $hasher = new Hmac\ClosureHmacHasher(function() {
             return 'hash';
         });
+        $provider = new Hmac\ClosureHmacKeyPairProvider(function($pub) {
+            return new Hmac\HmacKeyPair($pub, 'private');
+        });
 
-        $auth = hmac\auth_request_authorization_timestamp($hasher, 'Basic');
+        $auth = hmac\auth_request_authorization_timestamp($hasher, $provider, 'Basic');
 
         $req = new Hmac\MockHmacRequest('content', 'uri', 'GET', [
             'Authorization' => 'Basic public:hash',
             'X-Timestamp' => '123',
         ]);
-        $provider = new Hmac\ClosureHmacKeyPairProvider(function($pub) {
-            return new Hmac\HmacKeyPair($pub, 'private');
-        });
 
-        $this->assertTrue($auth($req, $provider));
+        $this->assertTrue($auth($req));
     }
 }
