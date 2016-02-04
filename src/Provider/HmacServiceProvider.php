@@ -36,6 +36,9 @@ class HmacServiceProvider implements ServiceProviderInterface
         $app['krak.hmac.request_signer'] = function(Container $app) {
             return new Hmac\RequestHmacSigner();
         };
+        $app['krak.hmac.base64_hasher'] = function(Container $app) {
+            return new Hmac\Base64HmacHasher($app['krak.hmac.std_hasher']);
+        };
         $app['krak.hmac.std_hasher'] = function(Container $app) {
             $p = 'krak.hmac.std_hasher.';
             if (!isset($app[$p.'alg'])) {
@@ -55,4 +58,3 @@ class HmacServiceProvider implements ServiceProviderInterface
         };
     }
 }
-

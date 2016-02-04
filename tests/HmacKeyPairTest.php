@@ -1,9 +1,8 @@
 <?php
 
-namespace Krak\Tests;
+namespace Krak\Hmac\Tests;
 
-use Krak\Hmac\HmacKeyPair,
-    Krak\Tests\TestCase;
+use Krak\Hmac\HmacKeyPair;
 
 class HmacKeyPairTest extends TestCase
 {

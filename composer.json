@@ -16,8 +16,10 @@
             "email": "rj@bighead.net"
         }
     ],
-    "require": {},
+    "require": {
+    },
     "require-dev": {
+        "guzzlehttp/psr7": "^1.2",
         "phpunit/phpunit": "~4.0",
         "pimple/pimple": "~3.0",
         "symfony/http-foundation": "~2.0"
@@ -28,11 +30,12 @@
     "autoload": {
         "psr-4": {
             "Krak\\Hmac\\": "src"
-        }
+        },
+        "files": ["src/inc.php"]
     },
     "autoload-dev": {
         "psr-4": {
-            "Krak\\Tests\\": "tests"
+            "Krak\\Hmac\\Tests\\": "tests"
         }
     }
 }

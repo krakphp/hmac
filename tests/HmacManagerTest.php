@@ -1,9 +1,8 @@
 <?php
 
-namespace Krak\Tests;
+namespace Krak\Hmac\Tests;
 
-use Krak\Hmac,
-    Krak\Tests\TestCase;
+use Krak\Hmac;
 
 class HmacManagerTest extends TestCase
 {

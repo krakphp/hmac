@@ -1,14 +1,12 @@
 <?php
 
-namespace Krak\Tests;
+namespace Krak\Hmac\Tests;
 
 use Krak\Hmac\StdHmacHasher,
-    Krak\Hmac\HmacKeyPair,
-    Krak\Tests\TestCase;
+    Krak\Hmac\HmacKeyPair;
 
 class HmacHasherTest extends TestCase
 {
-
     /**
      * @dataProvider keyPairProvider
      */

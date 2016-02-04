@@ -2,9 +2,9 @@
 
 namespace Krak\Hmac;
 
-use Symfony\Component\HttpFoundation\Request;
+use Psr\Http\Message\RequestInterface;
 
-class HttpFoundationHmacRequest implements HmacRequest
+class Psr7HmacRequest implements HmacRequest
 {
     private $request;
     private $public_key_header;
@@ -12,7 +12,7 @@ class HttpFoundationHmacRequest implements HmacRequest
     private $timestamp_header;
 
     public function __construct(
-        Request $request,
+        RequestInterface $request,
         $public_key_header = 'X-Public-Key',
         $hash_header = 'X-Hash',
         $timestamp_header = 'X-Timestamp'
@@ -25,49 +25,49 @@ class HttpFoundationHmacRequest implements HmacRequest
 
     public function getPublicKey()
     {
-        return $this->request->headers->get($this->public_key_header, '');
+        return $this->request->getHeader($this->public_key_header)[0];
     }
     public function setPublicKey($key)
     {
-        $this->request->headers->set($this->public_key_header, $key);
+        $this->request = $this->request->withHeader($this->public_key_header, $key);
     }
+
     public function getHash()
     {
-        return $this->request->headers->get($this->hash_header, '');
+        return $this->request->getHeader($this->hash_header)[0];
     }
     public function setHash($hash)
     {
-        $this->request->headers->set($this->hash_header, $hash);
+        $this->request = $this->request->withHeader($this->hash_header, $hash);
     }
     public function getTimestamp()
     {
-        return $this->request->headers->get($this->timestamp_header, '');
+        return $this->request->getHeader($this->timestamp_header)[0];
     }
     public function setTimestamp($timestamp)
     {
-        $this->request->headers->set($this->timestamp_header, $timestamp);
+        $this->request = $this->request->withHeader($this->timestamp_header, $timestamp);
     }
     public function getContent()
     {
-        return $this->request->getContent();
+        return (string) $this->request->getBody();
     }
     public function getUri()
     {
-        return $this->request->getUri();
+        return (string) $this->request->getUri();
     }
     public function getMethod()
     {
         return $this->request->getMethod();
     }
-    public function getHttpRequest()
-    {
-        return $this->request;
-    }
 
     public function getHeader($key) {
-        return $this->request->headers->get($key, '');
+        return $this->request->getHeader($key);
     }
     public function setHeader($key, $val) {
-        $this->request->headers->set($key, $val);
+        $this->request = $this->request->withHeader($key, $val);
+    }
+    public function getPsr7Request() {
+        return $this->request;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Krak\Tests;
+namespace Krak\Hmac\Tests;
 
 use Krak\Hmac,
     Pimple\Container,

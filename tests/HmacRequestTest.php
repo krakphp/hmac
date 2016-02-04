@@ -1,15 +1,18 @@
 <?php
 
-namespace Krak\Tests;
+namespace Krak\Hmac\Tests;
 
 use Krak\Hmac\HttpFoundationHmacRequest,
+    Krak\Hmac\Psr7HmacRequest,
     Krak\Hmac\HmacRequest,
     Krak\Hmac\MockHmacRequest,
-    Krak\Tests\TestCase,
-    Symfony\Component\HttpFoundation\Request;
+    Symfony\Component\HttpFoundation\Request,
+    GuzzleHttp\Psr7;
 
 class HmacRequestTest extends TestCase
 {
+    const URI = 'http://domain/part';
+
     public function testHttpFoundationConstruct()
     {
         $req = new HttpFoundationHmacRequest(new Request());
@@ -43,16 +46,20 @@ class HmacRequestTest extends TestCase
         $equals = $request->getPublicKey() == 'pub-key' &&
             $request->getHash() == 'hash' &&
             $request->getTimestamp() == 'timestamp' &&
-            $request->getContent() == '';
+            $request->getUri() == self::URI &&
+            $request->getContent() == 'content' &&
+            $request->getMethod() == 'GET';
 
         $this->assertTrue($equals);
     }
 
     public function hmacRequestProvider()
     {
+        $uri = self::URI;
         return [
-            [new HttpFoundationHmacRequest(new Request())],
-            [new MockHmacRequest('')],
+            [new HttpFoundationHmacRequest(Request::create($uri, 'GET', [], [], [], [], 'content'))],
+            [new MockHmacRequest('content', $uri, 'GET')],
+            [new Psr7HmacRequest(new Psr7\Request('GET', $uri, [], 'content'))],
         ];
     }
 }

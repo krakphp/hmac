@@ -1,9 +1,8 @@
 <?php
 
-namespace Krak\Tests\Security\Hmac;
+namespace Krak\Hmac\Tests;
 
 use Krak\Hmac,
-    Krak\Tests\TestCase,
     Symfony\Component\HttpFoundation\Request;
 
 class HmacSignerTest extends TestCase

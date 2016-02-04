@@ -10,12 +10,14 @@ class MockHmacRequest implements HmacRequest
     private $content;
     private $uri;
     private $method;
+    private $headers;
 
-    public function __construct($content, $uri, $method)
+    public function __construct($content, $uri, $method, $headers = [])
     {
         $this->content = $content;
         $this->uri = $uri;
         $this->method = $method;
+        $this->headers = $headers;
     }
 
     public function setPublicKey($key)
@@ -58,5 +60,12 @@ class MockHmacRequest implements HmacRequest
     public function getMethod()
     {
         return $this->method;
+    }
+
+    public function getHeader($key) {
+        return $this->headers[$key];
+    }
+    public function setHeader($key, $val) {
+        $this->headers[$key] = $val;
     }
 }
