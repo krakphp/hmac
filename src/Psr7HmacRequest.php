@@ -62,7 +62,13 @@ class Psr7HmacRequest implements HmacRequest
     }
 
     public function getHeader($key) {
-        return $this->request->getHeader($key);
+        $header = $this->request->getHeader($key);
+
+        if (!$header) {
+            return $header;
+        }
+
+        return $header[0];
     }
     public function setHeader($key, $val) {
         $this->request = $this->request->withHeader($key, $val);

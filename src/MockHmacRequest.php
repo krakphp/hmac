@@ -63,7 +63,11 @@ class MockHmacRequest implements HmacRequest
     }
 
     public function getHeader($key) {
-        return $this->headers[$key];
+        if (array_key_exists($key, $this->headers)) {
+            return $this->headers[$key];
+        }
+
+        return null;
     }
     public function setHeader($key, $val) {
         $this->headers[$key] = $val;

@@ -43,12 +43,15 @@ class HmacRequestTest extends TestCase
         $request->setHash('hash');
         $request->setTimestamp('timestamp');
 
+        $request->setHeader('key', 'value');
+
         $equals = $request->getPublicKey() == 'pub-key' &&
             $request->getHash() == 'hash' &&
             $request->getTimestamp() == 'timestamp' &&
             $request->getUri() == self::URI &&
             $request->getContent() == 'content' &&
-            $request->getMethod() == 'GET';
+            $request->getMethod() == 'GET' &&
+            $request->getHeader('key') == 'value';
 
         $this->assertTrue($equals);
     }
