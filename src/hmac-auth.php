@@ -21,7 +21,16 @@ function auth_request_authorization_timestamp(
     ) {
         $ts = $req->getHeader($timestamp_header);
         $auth = $req->getHeader($auth_header);
+
+        if (!$auth || !$ts) {
+            return false;
+        }
+
         $pair = $provider->getKeyPairFromPublicKey(public_key_from_authorization_header($auth));
+
+        if (!$pair) {
+            return false;
+        }
 
         $expected_auth = build_authorization_header($req, $ts, $type, $pair, $hasher, $hs_gen);
 
