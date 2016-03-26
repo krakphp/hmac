@@ -31,3 +31,24 @@ function sign_request_authorization_timestamp(
         $req->setHeader($auth_header, $auth);
     };
 }
+
+function hmac_sign_request(HmacConfig $config = null) {
+    $conf = $config ?: HmacConfig::create();
+
+    return function(HmacRequest $req, HmacKeyPair $pair) use ($conf) {
+        $time = call_user_func($conf->time_gen);
+        $auth = build_authorization_header(
+            $req,
+            $time,
+            $conf->scheme,
+            $pair,
+            $conf->hasher,
+            $conf->hs_gen
+        );
+
+        $req->setHeader($conf->time_header, $time);
+        $req->setHeader($conf->auth_header, $auth);
+
+        return $req;
+    };
+}

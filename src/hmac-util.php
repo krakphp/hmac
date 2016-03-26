@@ -22,7 +22,7 @@ function build_authorization_header(HmacRequest $req, $time, $provider, HmacKeyP
 }
 
 function public_key_from_authorization_header($header) {
-    $res = preg_replace('/(.* )?(\S+):(\S+)/', '$2', $header);
+    $res = preg_replace('/^\S+\s+(\S+):.+$/', '$1', $header);
     if ($res == $header) {
         return '';
     }

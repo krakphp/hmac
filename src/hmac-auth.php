@@ -37,3 +37,33 @@ function auth_request_authorization_timestamp(
         return $expected_auth == $req->getHeader($auth_header);
     };
 }
+
+function hmac_auth_request(HmacKeyPairProvider $provider, HmacConfig $config = null) {
+    $conf = $config ?: HmacConfig::create();
+
+    return function(HmacRequest $req) use ($provider, $conf) {
+        $time = $req->getHeader($conf->time_header);
+        $auth = $req->getHeader($conf->auth_header);
+
+        if (!$auth || !$time) {
+            return false;
+        }
+
+        $pair = $provider->getKeyPairFromPublicKey(public_key_from_authorization_header($auth));
+
+        if (!$pair) {
+            return false;
+        }
+
+        $expected_auth = build_authorization_header(
+            $req,
+            $time,
+            $conf->scheme,
+            $pair,
+            $conf->hasher,
+            $conf->hs_gen
+        );
+
+        return $expected_auth == $auth;
+    };
+}
