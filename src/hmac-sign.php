@@ -9,6 +9,8 @@
 
 namespace Krak\Hmac;
 
+use Psr\Http\Message\RequestInterface;
+
 /** signs a request into the Authorization header and uses a timestamp for the time component */
 function sign_request_authorization_timestamp(
     HmacHasher $hasher,
@@ -29,6 +31,20 @@ function sign_request_authorization_timestamp(
 
         $req->setHeader($timestamp_header, $ts);
         $req->setHeader($auth_header, $auth);
+    };
+}
+
+/** simple decorator for signing psr7 requests */
+function hmac_psr7_sign_request(HmacConfig $config = null) {
+    return hmac_psr7_sign(hmac_sign_request($config));
+}
+
+/** psr7 decorator */
+function hmac_psr7_sign($sign) {
+    return function(RequestInterface $req, HmacKeyPair $pair) use ($sign) {
+        $wrapped = new Psr7HmacRequest($req);
+        $wrapped = $sign($wrapped, $pair);
+        return $wrapped->getPsr7Request();
     };
 }
 

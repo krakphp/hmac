@@ -16,16 +16,18 @@
             "email": "rj@bighead.net"
         }
     ],
-    "require": {
-    },
+    "require": {},
     "require-dev": {
+        "guzzlehttp/guzzle": "^6.2",
         "guzzlehttp/psr7": "^1.2",
+        "phake/phake": "^2.3",
         "phpunit/phpunit": "~4.0",
         "pimple/pimple": "~3.0",
         "symfony/http-foundation": "~2.0"
     },
     "suggest": {
-        "symfony/http-foundation": "~2.0"
+        "guzzlehttp/guzzle": "Allows for GuzzleHttp client integration",
+        "symfony/http-foundation": "Allows for Symfony Request framework integration"
     },
     "autoload": {
         "psr-4": {

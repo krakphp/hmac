@@ -5,6 +5,7 @@ namespace Krak\Hmac\Tests;
 use Krak\Hmac;
 
 use function Krak\Hmac\hmac_sign_request,
+    Krak\Hmac\hmac_psr7_sign,
     Krak\Hmac\hmac_auth_request,
     Krak\Hmac\hmac_hashed_hs_gen,
     Krak\Hmac\hmac_ts_time_gen;
@@ -113,5 +114,12 @@ class HmacTest extends TestCase
         $auth = hmac_auth_request($provider);
 
         $this->assertTrue($auth($request));
+    }
+
+    public function testHmacPsr7SignRequestTest() {
+        $sign = hmac_psr7_sign(function($a) { return $a; });
+        $req = $this->psr7Request();
+
+        $this->assertEquals($req, $sign($req, new Hmac\HmacKeyPair('pub', 'priv')));
     }
 }

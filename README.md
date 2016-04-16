@@ -62,6 +62,20 @@ $sign = hmac\hmac_sign_request($config);
 $auth = hmac\hmac_auth_request($provider, $config);
 ```
 
+### Signers
+
+```
+hmac_sign_request(HmacConfing = null);
+hmac_psr7_sign_request(HmacConfing = null);
+hmac_psr7_sign($sign);
+```
+
+`hmac_sign_request` is the default signer which creates sign function that accepts an `HmacRequest` and `HmacKeyPair`.
+
+`hmac_psr7_sign_request` is a decorated signer around the hmac_sign_request for accepting and returning Psr Http Requests. It simply just wraps `hmac_sign_request` around the `hmac_psr7_sign` decorator.
+
+`hmac_psr7_sign` is a decorator sign function that accepts a sign function and wraps it and returns a sign function that will accept and return Psr Http Requests.
+
 ### Hash String Generator
 
 The hash string generators are functions that take the request and time value and generate the string that will end up being hashed.
@@ -94,3 +108,23 @@ provided `time_gen` funcs:
 
     // returns a time_gen which creates an RFC 2822  formatted date
     hmac_date_time_gen();
+
+## Integration
+
+### GuzzleHttp
+
+Simple integration with Guzzle can be done via the `Provider/guzzle.php` functions.
+
+```php
+<?php
+
+use GuzzleHttp\HandlerStack,
+    GuzzleHttp\Client,
+    Krak\Hmac\HmacKeyPair;
+use function Krak\Hmac\Provider\guzzle_hmac_middleware,
+    Krak\Hmac\hmac_psr7_sign_request,
+
+$handler = HandlerStack::create();
+$handler->push(guzzle_hmac_middleware(hmac_psr7_sign_request(), $keypair));
+$client = new Client(['handler' => $handler]);
+```
